@@ -1,45 +1,44 @@
-import { ChangeEvent } from 'react';
-import clsx from 'clsx';
+'use client';
 
-interface InputProps {
-  value: string | number;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  placeholder?: string;
+import { InputHTMLAttributes } from 'react';
+
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
-  lastValue?: string | number;
+  prefix?: string;
+  suffix?: string;
   className?: string;
 }
 
 export const Input = ({
-  value,
-  onChange,
-  placeholder,
   label,
-  lastValue,
-  className,
+  prefix,
+  suffix,
+  className = '',
+  ...props
 }: InputProps) => {
   return (
-    <div className="relative w-full">
+    <div className="space-y-1">
       {label && (
-        <label className="block text-sm text-gray-400 mb-1">{label}</label>
+        <label className="text-gray-400 text-sm">{label}</label>
       )}
-      <input
-        type="number"
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        className={clsx(
-          "w-full px-4 py-2 bg-[#1E1E1E] text-white rounded-lg",
-          "focus:outline-none focus:ring-2 focus:ring-blue-500",
-          "placeholder-gray-500 text-lg",
-          className
+      <div className="relative">
+        {prefix && (
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+            {prefix}
+          </span>
         )}
-      />
-      {lastValue && (
-        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-500">
-          @{lastValue}
-        </span>
-      )}
+        <input
+          {...props}
+          className={`w-full bg-[#252525] text-white rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+            prefix ? 'pl-6' : ''
+          } ${suffix ? 'pr-6' : ''} ${className}`}
+        />
+        {suffix && (
+          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+            {suffix}
+          </span>
+        )}
+      </div>
     </div>
   );
 };
