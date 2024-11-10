@@ -37,3 +37,13 @@ input[type="number"]::-webkit-outer-spin-button {
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #444;
 }
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.animate-fade-out {
+  animation: fadeOut 3s forwards;
+}
