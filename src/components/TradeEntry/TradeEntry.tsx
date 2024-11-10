@@ -70,7 +70,7 @@ export const TradeEntry = () => {
 
   const submitTrade = (isLong: boolean) => {
     if (!trade.entryPrice || !trade.exitPrice || !trade.positionUSD) {
-      alert("Please fill in all fields");
+      alert('Please fill in all fields');
       return;
     }
 
@@ -95,15 +95,18 @@ export const TradeEntry = () => {
 
     const updatedHistory = [newTrade, ...tradeHistory];
     setTradeHistory(updatedHistory);
-    localStorage.setItem("tradeHistory", JSON.stringify(updatedHistory));
-    setBalance((prev) => prev + results.pnlUSD);
-
-    setTrade((prev) => ({
-      ...prev,
-      entryPrice: "",
-      exitPrice: "",
-    }));
-  };
+    localStorage.setItem('tradeHistory', JSON.stringify(updatedHistory));
+    setBalance(prev => prev + results.pnlUSD);
+    
+    // Clear form but keep position size
+    const currentPositionSize = trade.positionUSD;
+    setTrade({
+      entryPrice: '',
+      exitPrice: '',
+      positionUSD: currentPositionSize,
+      leverage: settings.leverage,
+    });
+};
 
   return (
     <ClientOnly>
